@@ -39,7 +39,7 @@ function fmt(ds){const d=new Date(ds+'T12:00'),w=WDN[L][d.getDay()],m=T[L].month
 function render(){const y=view.getFullYear(),m=view.getMonth();$('#mlabel').textContent=T[L].months[m]+' '+y;let h=T[L].days.map(d=>`<div class="h">${d}</div>`).join('');
  const off=(new Date(y,m,1).getDay()+6)%7;for(let i=0;i<off;i++)h+='<div></div>';const n=new Date(y,m+1,0).getDate();
  for(let d=1;d<=n;d++){const k=iso(new Date(y,m,d)),s=DATA[k];if(!s){h+=`<button class="day" disabled>${d}</button>`;continue}const f=s.filter(x=>x.available).length;
- h+=`<button class="day ${f?'':'full'} ${k==selDay?'sel':''}" data-d="${k}" ${f?'':'disabled'}>${d}<small>${f?f+' '+T[L].free:T[L].full}</small></button>`}
+ h+=`<button class="day ${f?'':'full'} ${k==selDay?'sel':''}" data-d="${k}" ${f?'':'disabled'}>${d}${f?'':`<small>${T[L].full}</small>`}</button>`}
  $('#cal').innerHTML=h;$('#cal').querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{selDay=b.dataset.d;selTime=null;render();$('#formsec').classList.add('hidden')});
  $('#prev').disabled=y==2026&&m<=9;$('#next').disabled=y==2027&&m>=0;
  const sl=selDay?DATA[selDay]:null;$('#slots').innerHTML=sl?sl.map(x=>`<button class="slot ${x.time==selTime?'sel':''}" data-t2="${x.time}" ${x.available?'':'disabled'}>${x.time}</button>`).join(''):'';
